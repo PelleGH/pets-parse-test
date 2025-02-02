@@ -1,0 +1,7 @@
+Pickaxe
+obtainedBy/Pickaxe_From_Stick_And_Stone_Recipe
+
+Pickaxe_From_Stick_And_Stone_Recipe
+hasInput/Stick
+hasInput/Cobblestone
+usedInStation/CraftingTable
