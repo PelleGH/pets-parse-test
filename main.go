@@ -57,7 +57,7 @@ func main() {
 			}
 			newNode.NodeID = i // ASSIGN TO NODEID
 			fmt.Println(i)
-		} else if strings.HasPrefix(line, "    minecraft:obtainedBy") || (strings.HasPrefix(line, "    minecraft:hasInput")) || (strings.HasPrefix(line, "    minecraft:hasOutput")) {
+		} else if strings.HasPrefix(line, "    minecraft:obtainedBy") || (strings.HasPrefix(line, "    minecraft:hasInput")) || (strings.HasPrefix(line, "    minecraft:hasOutput") || (strings.HasPrefix(line, "    minecraft:usedInStation"))) {
 			var tempTuple Tuple
 			if strings.HasPrefix(line, "    minecraft:obtainedBy") {
 				temp := strings.TrimPrefix(line, "    minecraft:obtainedBy minecraft:")
@@ -74,25 +74,33 @@ func main() {
 				wrd := getWrd(temp)
 				tempTuple.key = "hasOutput"
 				tempTuple.value = wrd
+			} else if strings.HasPrefix(line, "    minecraft:usedInStation") {
+				temp := strings.TrimPrefix(line, "    minecraft:usedInStation minecraft:")
+				wrd := getWrd(temp)
+				tempTuple.key = "usedInStation"
+				tempTuple.value = wrd
 			}
 			nodeLst[newNode] = append(nodeLst[newNode], tempTuple)
-
+			//fmt.Println(nodeLst)
 		}
 		if strings.HasSuffix(line, ";") {
 			continue
 		} else if strings.HasSuffix(line, ".") { // END OF NODE
-
+			var tempTuple Tuple
+			nodeLst[newNode] = append(nodeLst[newNode], tempTuple)
 			//nodeLst = append(nodeLst, newNode)	// APPEND TO LIST OF NODES
-			// newNode.Edges = string{}
 
 		} else {
 			continue // NEWLINE/EMPTY SPACE
 		}
-		fmt.Println(line)
+		//fmt.Println(line)
+
 	}
 	if err := scanner.Err(); err != nil {
 		fmt.Println("Error reading file:", err)
 	}
+	fmt.Println(nodeLst)
+	fmt.Printf("bomba")
 }
 func getWrd(w string) string {
 	wrd := ""
